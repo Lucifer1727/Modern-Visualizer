@@ -1,74 +1,74 @@
-"use client"
+"use client";
 
-import { useState } from "react"
-import { motion, AnimatePresence } from "framer-motion"
-import { Plus, Minus, RotateCcw, Eye } from "lucide-react"
-import { Button } from "@/components/ui/button"
-import { Input } from "@/components/ui/input"
-import { useTheme } from "next-themes"
-import { Alert, AlertDescription } from "@/components/ui/alert"
+import { useState } from "react";
+import { motion, AnimatePresence } from "framer-motion";
+import { Plus, Minus, RotateCcw, Eye } from "lucide-react";
+import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
+import { useTheme } from "next-themes";
+import { Alert, AlertDescription } from "@/components/ui/alert";
 
 export default function QueueVisualizer() {
-  const [queue, setQueue] = useState<number[]>([10, 20, 30, 40])
-  const [inputValue, setInputValue] = useState<string>("")
-  const [isAnimating, setIsAnimating] = useState<boolean>(false)
-  const [peekActive, setPeekActive] = useState<boolean>(false)
-  const [message, setMessage] = useState<string | null>(null)
-  const { theme } = useTheme()
+  const [queue, setQueue] = useState<number[]>([10, 20, 30, 40]);
+  const [inputValue, setInputValue] = useState<string>("");
+  const [isAnimating, setIsAnimating] = useState<boolean>(false);
+  const [peekActive, setPeekActive] = useState<boolean>(false);
+  const [message, setMessage] = useState<string | null>(null);
+  useTheme();
 
   const enqueue = () => {
-    const value = Number.parseInt(inputValue)
+    const value = Number.parseInt(inputValue);
     if (!isNaN(value)) {
-      setIsAnimating(true)
-      setQueue([...queue, value])
-      setInputValue("")
-      setMessage(`Enqueued ${value} to the queue`)
+      setIsAnimating(true);
+      setQueue([...queue, value]);
+      setInputValue("");
+      setMessage(`Enqueued ${value} to the queue`);
       setTimeout(() => {
-        setIsAnimating(false)
-        setTimeout(() => setMessage(null), 2000)
-      }, 500)
+        setIsAnimating(false);
+        setTimeout(() => setMessage(null), 2000);
+      }, 500);
     }
-  }
+  };
 
   const dequeue = () => {
     if (queue.length > 0) {
-      setIsAnimating(true)
-      const dequeuedValue = queue[0]
-      setQueue(queue.slice(1))
-      setMessage(`Dequeued ${dequeuedValue} from the queue`)
+      setIsAnimating(true);
+      const dequeuedValue = queue[0];
+      setQueue(queue.slice(1));
+      setMessage(`Dequeued ${dequeuedValue} from the queue`);
       setTimeout(() => {
-        setIsAnimating(false)
-        setTimeout(() => setMessage(null), 2000)
-      }, 500)
+        setIsAnimating(false);
+        setTimeout(() => setMessage(null), 2000);
+      }, 500);
     } else {
-      setMessage("Queue is empty")
-      setTimeout(() => setMessage(null), 2000)
+      setMessage("Queue is empty");
+      setTimeout(() => setMessage(null), 2000);
     }
-  }
+  };
 
   const peek = () => {
     if (queue.length > 0) {
-      setPeekActive(true)
-      setMessage(`Front element is ${queue[0]}`)
+      setPeekActive(true);
+      setMessage(`Front element is ${queue[0]}`);
       setTimeout(() => {
-        setPeekActive(false)
-        setTimeout(() => setMessage(null), 2000)
-      }, 1500)
+        setPeekActive(false);
+        setTimeout(() => setMessage(null), 2000);
+      }, 1500);
     } else {
-      setMessage("Queue is empty")
-      setTimeout(() => setMessage(null), 2000)
+      setMessage("Queue is empty");
+      setTimeout(() => setMessage(null), 2000);
     }
-  }
+  };
 
   const resetQueue = () => {
-    setIsAnimating(true)
-    setQueue([10, 20, 30, 40])
-    setMessage("Queue reset to default")
+    setIsAnimating(true);
+    setQueue([10, 20, 30, 40]);
+    setMessage("Queue reset to default");
     setTimeout(() => {
-      setIsAnimating(false)
-      setTimeout(() => setMessage(null), 2000)
-    }, 500)
-  }
+      setIsAnimating(false);
+      setTimeout(() => setMessage(null), 2000);
+    }, 500);
+  };
 
   return (
     <div>
@@ -86,7 +86,9 @@ export default function QueueVisualizer() {
                       y: 0,
                       scale: peekActive && index === 0 ? 1.05 : 1,
                       boxShadow:
-                        peekActive && index === 0 ? "0 0 15px rgba(56, 189, 248, 0.8)" : "0 1px 3px rgba(0,0,0,0.1)",
+                        peekActive && index === 0
+                          ? "0 0 15px rgba(56, 189, 248, 0.8)"
+                          : "0 1px 3px rgba(0,0,0,0.1)",
                     }}
                     exit={{ opacity: 0, y: -50 }}
                     transition={{
@@ -127,8 +129,18 @@ export default function QueueVisualizer() {
                   <span className="text-xs mr-2">Dequeue</span>
                   <svg width="100" height="20" className="text-slate-400">
                     <defs>
-                      <marker id="arrowhead" markerWidth="10" markerHeight="7" refX="0" refY="3.5" orient="auto">
-                        <polygon points="0 0, 10 3.5, 0 7" fill="currentColor" />
+                      <marker
+                        id="arrowhead"
+                        markerWidth="10"
+                        markerHeight="7"
+                        refX="0"
+                        refY="3.5"
+                        orient="auto"
+                      >
+                        <polygon
+                          points="0 0, 10 3.5, 0 7"
+                          fill="currentColor"
+                        />
                       </marker>
                     </defs>
                     <line
@@ -150,7 +162,9 @@ export default function QueueVisualizer() {
 
         <div className="flex-1 order-1 md:order-2">
           <div className="bg-white dark:bg-slate-800 rounded-lg p-6 shadow-sm border border-slate-200 dark:border-slate-700">
-            <h3 className="text-xl font-bold text-slate-800 dark:text-white mb-4">Queue Operations</h3>
+            <h3 className="text-xl font-bold text-slate-800 dark:text-white mb-4">
+              Queue Operations
+            </h3>
 
             {message && (
               <Alert className="mb-4">
@@ -167,7 +181,10 @@ export default function QueueVisualizer() {
                   onChange={(e) => setInputValue(e.target.value)}
                   className="flex-1"
                 />
-                <Button onClick={enqueue} disabled={isAnimating || inputValue === ""}>
+                <Button
+                  onClick={enqueue}
+                  disabled={isAnimating || inputValue === ""}
+                >
                   <Plus className="mr-2 h-4 w-4" /> Enqueue
                 </Button>
               </div>
@@ -191,24 +208,38 @@ export default function QueueVisualizer() {
                 </Button>
               </div>
 
-              <Button onClick={resetQueue} disabled={isAnimating} variant="outline" className="w-full">
+              <Button
+                onClick={resetQueue}
+                disabled={isAnimating}
+                variant="outline"
+                className="w-full"
+              >
                 <RotateCcw className="mr-2 h-4 w-4" /> Reset
               </Button>
             </div>
 
             <div className="mt-8">
-              <h4 className="font-medium text-slate-800 dark:text-white mb-2">About Queues</h4>
+              <h4 className="font-medium text-slate-800 dark:text-white mb-2">
+                About Queues
+              </h4>
               <p className="text-sm text-slate-600 dark:text-slate-400">
-                A queue is a linear data structure that follows the First In, First Out (FIFO) principle. Elements are
-                added at the rear and removed from the front of the queue.
+                A queue is a linear data structure that follows the First In,
+                First Out (FIFO) principle. Elements are added at the rear and
+                removed from the front of the queue.
               </p>
               <div className="mt-4 grid grid-cols-2 gap-4">
                 <div className="bg-slate-100 dark:bg-slate-900 p-3 rounded-md">
-                  <p className="text-sm text-slate-500 dark:text-slate-400">Size</p>
-                  <p className="text-xl font-bold text-slate-800 dark:text-white">{queue.length}</p>
+                  <p className="text-sm text-slate-500 dark:text-slate-400">
+                    Size
+                  </p>
+                  <p className="text-xl font-bold text-slate-800 dark:text-white">
+                    {queue.length}
+                  </p>
                 </div>
                 <div className="bg-slate-100 dark:bg-slate-900 p-3 rounded-md">
-                  <p className="text-sm text-slate-500 dark:text-slate-400">Front Element</p>
+                  <p className="text-sm text-slate-500 dark:text-slate-400">
+                    Front Element
+                  </p>
                   <p className="text-xl font-bold text-slate-800 dark:text-white">
                     {queue.length > 0 ? queue[0] : "N/A"}
                   </p>
@@ -219,6 +250,5 @@ export default function QueueVisualizer() {
         </div>
       </div>
     </div>
-  )
+  );
 }
-

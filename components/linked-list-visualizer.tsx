@@ -1,17 +1,17 @@
-"use client"
+"use client";
 
-import { useState, useRef, useEffect } from "react"
-import { motion, AnimatePresence } from "framer-motion"
-import { Plus, Minus, Search, RotateCcw } from "lucide-react"
-import { Button } from "@/components/ui/button"
-import { Input } from "@/components/ui/input"
-import { useTheme } from "next-themes"
-import { Alert, AlertDescription } from "@/components/ui/alert"
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
+import { useState, useRef, useEffect } from "react";
+import { motion, AnimatePresence } from "framer-motion";
+import { Plus, Minus, Search, RotateCcw } from "lucide-react";
+import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
+import { useTheme } from "next-themes";
+import { Alert, AlertDescription } from "@/components/ui/alert";
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 
 interface ListNode {
-  id: string
-  value: number
+  id: string;
+  value: number;
 }
 
 export default function LinkedListVisualizer() {
@@ -20,142 +20,145 @@ export default function LinkedListVisualizer() {
     { id: "2", value: 20 },
     { id: "3", value: 30 },
     { id: "4", value: 40 },
-  ])
-  const [inputValue, setInputValue] = useState<string>("")
-  const [searchValue, setSearchValue] = useState<string>("")
-  const [searchIndex, setSearchIndex] = useState<number | null>(null)
-  const [isAnimating, setIsAnimating] = useState<boolean>(false)
-  const [message, setMessage] = useState<string | null>(null)
-  const { theme } = useTheme()
-  const containerRef = useRef<HTMLDivElement>(null)
-  const [containerWidth, setContainerWidth] = useState(0)
+  ]);
+  const [inputValue, setInputValue] = useState<string>("");
+  const [searchValue, setSearchValue] = useState<string>("");
+  const [searchIndex, setSearchIndex] = useState<number | null>(null);
+  const [isAnimating, setIsAnimating] = useState<boolean>(false);
+  const [message, setMessage] = useState<string | null>(null);
+  const { theme } = useTheme();
+  const containerRef = useRef<HTMLDivElement>(null);
+  const [containerWidth, setContainerWidth] = useState(0);
 
   useEffect(() => {
     if (containerRef.current) {
-      setContainerWidth(containerRef.current.offsetWidth)
+      setContainerWidth(containerRef.current.offsetWidth);
     }
 
     const handleResize = () => {
       if (containerRef.current) {
-        setContainerWidth(containerRef.current.offsetWidth)
+        setContainerWidth(containerRef.current.offsetWidth);
       }
-    }
+    };
 
-    window.addEventListener("resize", handleResize)
-    return () => window.removeEventListener("resize", handleResize)
-  }, [])
+    window.addEventListener("resize", handleResize);
+    return () => window.removeEventListener("resize", handleResize);
+  }, []);
 
   const addToHead = () => {
-    const value = Number.parseInt(inputValue)
+    const value = Number.parseInt(inputValue);
     if (!isNaN(value)) {
-      setIsAnimating(true)
-      const newNode = { id: Date.now().toString(), value }
-      setList([newNode, ...list])
-      setInputValue("")
-      setMessage(`Added ${value} to the head`)
+      setIsAnimating(true);
+      const newNode = { id: Date.now().toString(), value };
+      setList([newNode, ...list]);
+      setInputValue("");
+      setMessage(`Added ${value} to the head`);
       setTimeout(() => {
-        setIsAnimating(false)
-        setTimeout(() => setMessage(null), 2000)
-      }, 500)
+        setIsAnimating(false);
+        setTimeout(() => setMessage(null), 2000);
+      }, 500);
     }
-  }
+  };
 
   const addToTail = () => {
-    const value = Number.parseInt(inputValue)
+    const value = Number.parseInt(inputValue);
     if (!isNaN(value)) {
-      setIsAnimating(true)
-      const newNode = { id: Date.now().toString(), value }
-      setList([...list, newNode])
-      setInputValue("")
-      setMessage(`Added ${value} to the tail`)
+      setIsAnimating(true);
+      const newNode = { id: Date.now().toString(), value };
+      setList([...list, newNode]);
+      setInputValue("");
+      setMessage(`Added ${value} to the tail`);
       setTimeout(() => {
-        setIsAnimating(false)
-        setTimeout(() => setMessage(null), 2000)
-      }, 500)
+        setIsAnimating(false);
+        setTimeout(() => setMessage(null), 2000);
+      }, 500);
     }
-  }
+  };
 
   const removeFromHead = () => {
     if (list.length > 0) {
-      setIsAnimating(true)
-      const removedValue = list[0].value
-      setList(list.slice(1))
-      setMessage(`Removed ${removedValue} from the head`)
+      setIsAnimating(true);
+      const removedValue = list[0].value;
+      setList(list.slice(1));
+      setMessage(`Removed ${removedValue} from the head`);
       setTimeout(() => {
-        setIsAnimating(false)
-        setTimeout(() => setMessage(null), 2000)
-      }, 500)
+        setIsAnimating(false);
+        setTimeout(() => setMessage(null), 2000);
+      }, 500);
     } else {
-      setMessage("List is empty")
-      setTimeout(() => setMessage(null), 2000)
+      setMessage("List is empty");
+      setTimeout(() => setMessage(null), 2000);
     }
-  }
+  };
 
   const removeFromTail = () => {
     if (list.length > 0) {
-      setIsAnimating(true)
-      const removedValue = list[list.length - 1].value
-      setList(list.slice(0, -1))
-      setMessage(`Removed ${removedValue} from the tail`)
+      setIsAnimating(true);
+      const removedValue = list[list.length - 1].value;
+      setList(list.slice(0, -1));
+      setMessage(`Removed ${removedValue} from the tail`);
       setTimeout(() => {
-        setIsAnimating(false)
-        setTimeout(() => setMessage(null), 2000)
-      }, 500)
+        setIsAnimating(false);
+        setTimeout(() => setMessage(null), 2000);
+      }, 500);
     } else {
-      setMessage("List is empty")
-      setTimeout(() => setMessage(null), 2000)
+      setMessage("List is empty");
+      setTimeout(() => setMessage(null), 2000);
     }
-  }
+  };
 
   const searchNode = () => {
-    const value = Number.parseInt(searchValue)
+    const value = Number.parseInt(searchValue);
     if (!isNaN(value)) {
-      setIsAnimating(true)
-      const index = list.findIndex((node) => node.value === value)
-      setSearchIndex(index)
+      setIsAnimating(true);
+      const index = list.findIndex((node) => node.value === value);
+      setSearchIndex(index);
       if (index !== -1) {
-        setMessage(`Found ${value} at position ${index}`)
+        setMessage(`Found ${value} at position ${index}`);
       } else {
-        setMessage(`${value} not found in the list`)
+        setMessage(`${value} not found in the list`);
       }
       setTimeout(() => {
-        setIsAnimating(false)
+        setIsAnimating(false);
         setTimeout(() => {
-          setSearchIndex(null)
-          setMessage(null)
-        }, 2000)
-      }, 1500)
+          setSearchIndex(null);
+          setMessage(null);
+        }, 2000);
+      }, 1500);
     }
-  }
+  };
 
   const resetList = () => {
-    setIsAnimating(true)
+    setIsAnimating(true);
     setList([
       { id: "1", value: 10 },
       { id: "2", value: 20 },
       { id: "3", value: 30 },
       { id: "4", value: 40 },
-    ])
-    setSearchIndex(null)
-    setMessage("List reset to default")
+    ]);
+    setSearchIndex(null);
+    setMessage("List reset to default");
     setTimeout(() => {
-      setIsAnimating(false)
-      setTimeout(() => setMessage(null), 2000)
-    }, 500)
-  }
+      setIsAnimating(false);
+      setTimeout(() => setMessage(null), 2000);
+    }, 500);
+  };
 
   // Calculate the node spacing based on container width and number of nodes
   const getNodeSpacing = () => {
-    const nodeWidth = 60 // Width of each node
-    const minSpacing = 80 // Minimum space between nodes
+    const nodeWidth = 60; // Width of each node
+    const minSpacing = 80; // Minimum space between nodes
 
-    const availableWidth = containerWidth - nodeWidth * list.length
-    const spacing = Math.max(minSpacing, availableWidth / Math.max(1, list.length - 1))
+    const availableWidth = containerWidth - nodeWidth * list.length;
+    const spacing = Math.max(
+      minSpacing,
+      availableWidth / Math.max(1, list.length - 1)
+    );
 
-    return Math.min(spacing, 120) // Cap the spacing at 120px
-  }
+    return Math.min(spacing, 120); // Cap the spacing at 120px
+  };
 
-  const nodeSpacing = getNodeSpacing()
+  const nodeSpacing = getNodeSpacing();
 
   return (
     <div>
@@ -170,7 +173,9 @@ export default function LinkedListVisualizer() {
                 <div
                   key={node.id}
                   className="flex flex-col items-center"
-                  style={{ marginRight: index < list.length - 1 ? nodeSpacing : 0 }}
+                  style={{
+                    marginRight: index < list.length - 1 ? nodeSpacing : 0,
+                  }}
                 >
                   <motion.div
                     initial={{ opacity: 0, scale: 0.8 }}
@@ -178,7 +183,9 @@ export default function LinkedListVisualizer() {
                       opacity: 1,
                       scale: searchIndex === index ? 1.1 : 1,
                       boxShadow:
-                        searchIndex === index ? "0 0 15px rgba(249, 115, 22, 0.8)" : "0 4px 6px rgba(0, 0, 0, 0.1)",
+                        searchIndex === index
+                          ? "0 0 15px rgba(249, 115, 22, 0.8)"
+                          : "0 4px 6px rgba(0, 0, 0, 0.1)",
                     }}
                     exit={{ opacity: 0, scale: 0.8 }}
                     transition={{
@@ -187,7 +194,11 @@ export default function LinkedListVisualizer() {
                       damping: 20,
                     }}
                     className={`w-14 h-14 rounded-md flex items-center justify-center text-white font-medium relative
-                      ${searchIndex === index ? "bg-orange-500 dark:bg-orange-600" : "bg-sky-500 dark:bg-sky-600"}`}
+                      ${
+                        searchIndex === index
+                          ? "bg-orange-500 dark:bg-orange-600"
+                          : "bg-sky-500 dark:bg-sky-600"
+                      }`}
                   >
                     {node.value}
                     {index === 0 && (
@@ -242,7 +253,11 @@ export default function LinkedListVisualizer() {
               ))}
             </AnimatePresence>
 
-            {list.length === 0 && <div className="text-slate-500 dark:text-slate-400 italic">Empty list</div>}
+            {list.length === 0 && (
+              <div className="text-slate-500 dark:text-slate-400 italic">
+                Empty list
+              </div>
+            )}
           </div>
         </div>
       </div>
@@ -266,7 +281,11 @@ export default function LinkedListVisualizer() {
                 />
               </div>
               <div className="flex gap-2">
-                <Button onClick={addToHead} disabled={isAnimating || inputValue === ""} className="flex-1">
+                <Button
+                  onClick={addToHead}
+                  disabled={isAnimating || inputValue === ""}
+                  className="flex-1"
+                >
                   <Plus className="mr-2 h-4 w-4" /> Add to Head
                 </Button>
                 <Button
@@ -313,14 +332,20 @@ export default function LinkedListVisualizer() {
               />
               <Button
                 onClick={searchNode}
-                disabled={isAnimating || searchValue === "" || list.length === 0}
+                disabled={
+                  isAnimating || searchValue === "" || list.length === 0
+                }
                 variant="secondary"
               >
                 <Search className="mr-2 h-4 w-4" /> Search
               </Button>
             </div>
 
-            <Button onClick={resetList} disabled={isAnimating} variant="outline">
+            <Button
+              onClick={resetList}
+              disabled={isAnimating}
+              variant="outline"
+            >
               <RotateCcw className="mr-2 h-4 w-4" /> Reset
             </Button>
           </div>
@@ -334,20 +359,29 @@ export default function LinkedListVisualizer() {
               </Alert>
             )}
 
-            <h4 className="font-medium text-slate-800 dark:text-white mb-2">About Linked Lists</h4>
+            <h4 className="font-medium text-slate-800 dark:text-white mb-2">
+              About Linked Lists
+            </h4>
             <p className="text-sm text-slate-600 dark:text-slate-400">
-              A linked list is a linear data structure where each element (node) contains a value and a reference (or
-              pointer) to the next node. Unlike arrays, linked lists don't require contiguous memory allocation,
-              allowing for efficient insertions and deletions.
+              A linked list is a linear data structure where each element (node)
+              contains a value and a reference (or pointer) to the next node.
+              Unlike arrays, linked lists don&apos;t require contiguous memory
+              allocation, allowing for efficient insertions and deletions.
             </p>
 
             <div className="mt-4 grid grid-cols-2 gap-4">
               <div className="bg-slate-100 dark:bg-slate-900 p-3 rounded-md">
-                <p className="text-sm text-slate-500 dark:text-slate-400">Length</p>
-                <p className="text-xl font-bold text-slate-800 dark:text-white">{list.length}</p>
+                <p className="text-sm text-slate-500 dark:text-slate-400">
+                  Length
+                </p>
+                <p className="text-xl font-bold text-slate-800 dark:text-white">
+                  {list.length}
+                </p>
               </div>
               <div className="bg-slate-100 dark:bg-slate-900 p-3 rounded-md">
-                <p className="text-sm text-slate-500 dark:text-slate-400">Head Value</p>
+                <p className="text-sm text-slate-500 dark:text-slate-400">
+                  Head Value
+                </p>
                 <p className="text-xl font-bold text-slate-800 dark:text-white">
                   {list.length > 0 ? list[0].value : "N/A"}
                 </p>
@@ -355,7 +389,9 @@ export default function LinkedListVisualizer() {
             </div>
 
             <div className="mt-4 bg-slate-100 dark:bg-slate-900 p-3 rounded-md">
-              <p className="text-sm text-slate-500 dark:text-slate-400">Operations</p>
+              <p className="text-sm text-slate-500 dark:text-slate-400">
+                Operations
+              </p>
               <ul className="mt-2 text-sm text-slate-600 dark:text-slate-400 list-disc list-inside">
                 <li>Add to head: O(1) time complexity</li>
                 <li>Add to tail: O(1) time complexity</li>
@@ -368,6 +404,5 @@ export default function LinkedListVisualizer() {
         </div>
       </div>
     </div>
-  )
+  );
 }
-

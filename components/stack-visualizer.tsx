@@ -14,7 +14,7 @@ export default function StackVisualizer() {
   const [isAnimating, setIsAnimating] = useState<boolean>(false);
   const [peekActive, setPeekActive] = useState<boolean>(false);
   const [message, setMessage] = useState<string | null>(null);
-  const { theme } = useTheme();
+  useTheme();
 
   const push = () => {
     const value = Number.parseInt(inputValue);
@@ -192,7 +192,7 @@ export default function StackVisualizer() {
               <p className="text-sm text-slate-600 dark:text-slate-400">
                 A stack is a linear data structure that follows the Last In,
                 First Out (LIFO) principle. Elements are added and removed from
-                the same end, called the "top" of the stack.
+                the same end, called the &quot;top&quot; of the stack.
               </p>
               <div className="mt-4 grid grid-cols-2 gap-4">
                 <div className="bg-slate-100 dark:bg-slate-900 p-3 rounded-md">
