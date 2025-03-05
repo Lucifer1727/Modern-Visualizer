@@ -8,6 +8,7 @@ import { Input } from "@/components/ui/input";
 import { useTheme } from "next-themes";
 import { Alert, AlertDescription } from "@/components/ui/alert";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
+import { CoolMode } from "@/components/magicui/cool-mode";
 
 interface ListNode {
   id: string;
@@ -212,43 +213,6 @@ export default function LinkedListVisualizer() {
                       </div>
                     )}
                   </motion.div>
-
-                  {index < list.length - 1 && (
-                    <motion.svg
-                      width={nodeSpacing}
-                      height="20"
-                      className="absolute"
-                      initial={{ opacity: 0 }}
-                      animate={{ opacity: 1 }}
-                      exit={{ opacity: 0 }}
-                      style={{
-                        left: `calc(100% + ${nodeSpacing / 2 - 10}px)`,
-                        top: "50%",
-                        transform: "translateY(-50%)",
-                      }}
-                    >
-                      <motion.line
-                        x1="0"
-                        y1="10"
-                        x2={nodeSpacing - 20}
-                        y2="10"
-                        stroke={theme === "dark" ? "#60a5fa" : "#3b82f6"}
-                        strokeWidth="2"
-                        initial={{ pathLength: 0 }}
-                        animate={{ pathLength: 1 }}
-                        transition={{ duration: 0.5 }}
-                      />
-                      <motion.polygon
-                        points="0,-5 10,0 0,5"
-                        fill={theme === "dark" ? "#60a5fa" : "#3b82f6"}
-                        initial={{ opacity: 0 }}
-                        animate={{ opacity: 1 }}
-                        style={{
-                          transform: `translate(${nodeSpacing - 20}px, 10px)`,
-                        }}
-                      />
-                    </motion.svg>
-                  )}
                 </div>
               ))}
             </AnimatePresence>
@@ -301,22 +265,26 @@ export default function LinkedListVisualizer() {
 
             <TabsContent value="remove" className="space-y-4">
               <div className="flex gap-2">
-                <Button
-                  onClick={removeFromHead}
-                  disabled={isAnimating || list.length === 0}
-                  variant="outline"
-                  className="flex-1"
-                >
-                  <Minus className="mr-2 h-4 w-4" /> Remove from Head
-                </Button>
-                <Button
-                  onClick={removeFromTail}
-                  disabled={isAnimating || list.length === 0}
-                  variant="outline"
-                  className="flex-1"
-                >
-                  <Minus className="mr-2 h-4 w-4" /> Remove from Tail
-                </Button>
+                <CoolMode>
+                  <Button
+                    onClick={removeFromHead}
+                    disabled={isAnimating || list.length === 0}
+                    variant="outline"
+                    className="flex-1"
+                  >
+                    <Minus className="mr-2 h-4 w-4" /> Remove from Head
+                  </Button>
+                </CoolMode>
+                <CoolMode>
+                  <Button
+                    onClick={removeFromTail}
+                    disabled={isAnimating || list.length === 0}
+                    variant="outline"
+                    className="flex-1"
+                  >
+                    <Minus className="mr-2 h-4 w-4" /> Remove from Tail
+                  </Button>
+                </CoolMode>
               </div>
             </TabsContent>
           </Tabs>

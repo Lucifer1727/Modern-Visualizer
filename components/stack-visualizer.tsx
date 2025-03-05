@@ -5,7 +5,6 @@ import { motion, AnimatePresence } from "framer-motion";
 import { Plus, Minus, RotateCcw, Eye } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
-import { useTheme } from "next-themes";
 import { Alert, AlertDescription } from "@/components/ui/alert";
 
 export default function StackVisualizer() {
@@ -14,8 +13,6 @@ export default function StackVisualizer() {
   const [isAnimating, setIsAnimating] = useState<boolean>(false);
   const [peekActive, setPeekActive] = useState<boolean>(false);
   const [message, setMessage] = useState<string | null>(null);
-  useTheme();
-
   const push = () => {
     const value = Number.parseInt(inputValue);
     if (!isNaN(value)) {
